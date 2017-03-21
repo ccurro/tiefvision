@@ -25,6 +25,7 @@ function similarity_db_lib.encodeImage(imagePath, encoder)
   -- encode
   local encoderInput = tiefvision_commons.loadImage(inputScaled)
   local encoderOutput = encoder:forward(encoderInput)[2]
+  local encoderOutput = torch.mean(torch.mean(encoderOutput, 2), 3)
   encoderOutput = encoderOutput:transpose(1, 3):clone() -- make it contiguous by cloning
   for w = 1, encoderOutput:size()[1] do
     for h = 1, encoderOutput:size()[2] do
