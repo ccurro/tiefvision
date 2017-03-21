@@ -14,24 +14,24 @@ require 'image'
 local torch = require 'torch'
 
 local tiefvision_commons = require '0-tiefvision-commons/tiefvision_commons'
-local similarity_db_lib = require '8-similarity-db-cnn/similarity_db_lib'
+local similarity_db_lib = require '8a-similarity-db-cnn/similarity_db_lib'
 local tiefvision_config_loader = require('0-tiefvision-commons/tiefvision_config_loader')
 
 local function appendTensorToFile(f, x)
    -- only handles rank 1 tensors
-   tbl = torch.totable(x:squeeze())
-   a = {}
+   local tbl = torch.totable(x:squeeze())
+   local a = {}
    for k, v in pairs(tbl) do
       table.insert(a, tostring(v))
    end
-   str = table.concat(a, ',')
+   local str = table.concat(a, ',')
    f:write(str .. "\n")
 end
 
 local function createDb(sourceFolder, destinationFolder)
   local files = tiefvision_commons.getFiles(sourceFolder)
   local encoder = similarity_db_lib.getEncoder()
-  f = io.open('test.csv')  
+  local f = io.open('test.csv', 'w')
   for fileIndex = 1, #files do
     local file = files[fileIndex]
     local destPath = destinationFolder .. '/' .. file

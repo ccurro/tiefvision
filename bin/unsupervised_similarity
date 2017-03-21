@@ -57,12 +57,12 @@ echo "Generating encoder"
 luajit $APP_FOLDER/1-split-encoder-classifier/split-encoder-classifier.lua -config $CONFIG
 
 echo "Generating image encoding"
-luajit $APP_FOLDER/8-similarity-db-cnn/generate-similarity-db.lua \
+luajit $APP_FOLDER/8a-similarity-db-cnn/generate-similarity-db.lua \
   -sources $IMAGES \
   -destinations $ENCODED_IMAGES \
   -config $CONFIG
 
-echo "Generating image similarities"
-luajit $APP_FOLDER/9-similarity-db/similarity-db.lua \
-  -images $ENCODED_IMAGES \
-  -config $CONFIG
+#echo "Generating image similarities"
+#luajit $APP_FOLDER/9-similarity-db/similarity-db.lua \
+#  -images $ENCODED_IMAGES \
+#  -config $CONFIG
