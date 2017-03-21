@@ -19,14 +19,13 @@ local tiefvision_config_loader = require('0-tiefvision-commons/tiefvision_config
 
 local function appendTensorToFile(f, x)
    -- only handles rank 1 tensors
-   tbl = torch.totoable(x:squeeze())
+   tbl = torch.totable(x:squeeze())
    a = {}
    for k, v in pairs(tbl) do
       table.insert(a, tostring(v))
    end
    str = table.concat(a, ',')
-
-   f.write(str .. "\n")
+   f:write(str .. "\n")
 end
 
 local function createDb(sourceFolder, destinationFolder)
@@ -43,11 +42,12 @@ local function createDb(sourceFolder, destinationFolder)
       local encoderOutput = similarity_db_lib.encodeImage(sourceFolder .. '/' .. file, encoder)
       torch.save(destPath, encoderOutput)
       -- add spot to write ascii *line* to file
+      f:write(file .. ',')
       appendTensorToFile(f, encoderOutput)
       collectgarbage()
     end
   end
-  f:close
+  f:close()
 end
 
 function getOptions()
